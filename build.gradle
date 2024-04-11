@@ -1,0 +1,57 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.2.4'
+	id 'io.spring.dependency-management' version '1.1.4'
+}
+
+group = 'com.example'
+version = '0.0.1'
+
+java {
+	sourceCompatibility = '17'
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+	/////////////////////////////////////////////////////////////////////
+	// 순현재가치(NPV), 내부수익률(IRR) 계산 모듈의 검증을 위해 사용할 POI 라이브러리 //
+	/////////////////////////////////////////////////////////////////////
+	implementation('org.apache.poi:poi-ooxml:5.2.5') {
+		exclude group: 'org.apache.commons', module: 'commons-compress' // CWE-835 - Loop with Unreachable Exit Condition
+	}
+	implementation 'org.apache.commons:commons-compress:1.26.0' // 취약점을 개선한 버전의 ion-java 의존성 추가
+
+	/////////////////////////////////////////////////////////////////////
+	// lombok 은 application  레벨에서만 사용                              //
+	/////////////////////////////////////////////////////////////////////
+	compileOnly 'org.projectlombok:lombok'
+	runtimeOnly 'org.postgresql:postgresql'
+	annotationProcessor 'org.projectlombok:lombok'
+
+
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
+jar {
+	enabled = false;
+}
+
+bootJar {
+	archiveFileName = "financial-model-example-${project.version}.jar"
+}
