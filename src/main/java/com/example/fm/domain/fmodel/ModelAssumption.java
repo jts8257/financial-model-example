@@ -16,11 +16,11 @@ public class ModelAssumption {
 
     public static ModelAssumption byModel(FinancialModel model) {
         return switch (model) {
-            case MODEL_1 -> new ModelAssumption(Term.YEAR, BigDecimal.valueOf(0.03), BigDecimal.valueOf(0.02),
+            case PRICE_MODEL_1, SALE_MODEL_1 -> new ModelAssumption(Term.YEAR, BigDecimal.valueOf(0.03), BigDecimal.valueOf(0.02),
                     BigDecimal.valueOf(0.7), BigDecimal.valueOf(0.05),BigDecimal.valueOf(0.1));
-            case MODEL_2 -> new ModelAssumption(Term.YEAR, BigDecimal.valueOf(0.02), BigDecimal.valueOf(0.025),
+            case PRICE_MODEL_2, SALE_MODEL_2 -> new ModelAssumption(Term.YEAR, BigDecimal.valueOf(0.02), BigDecimal.valueOf(0.025),
                     BigDecimal.valueOf(0.7), BigDecimal.valueOf(0.07), BigDecimal.valueOf(0.08));
-            case MODEL_3 -> new ModelAssumption(Term.YEAR, BigDecimal.valueOf(0.035), BigDecimal.valueOf(0.02),
+            case PRICE_MODEL_3, SALE_MODEL_3 -> new ModelAssumption(Term.YEAR, BigDecimal.valueOf(0.035), BigDecimal.valueOf(0.02),
                     BigDecimal.valueOf(0.7), BigDecimal.valueOf(0.055), BigDecimal.valueOf(0.095));
         };
     }

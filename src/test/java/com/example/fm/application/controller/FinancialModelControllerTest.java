@@ -1,9 +1,8 @@
 package com.example.fm.application.controller;
 
-import com.example.fm.application.dto.CalculationRequest;
+import com.example.fm.application.dto.PriceCalculationRequest;
 import com.example.fm.application.service.FinancialModelService;
 import com.example.fm.domain.fmodel.FinancialModel;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -17,8 +16,6 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.math.BigDecimal;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 @WebMvcTest(FinancialModelController.class)
 public class FinancialModelControllerTest {
 
@@ -30,13 +27,13 @@ public class FinancialModelControllerTest {
 
     @Test
     public void validRequest() throws Exception {
-        CalculationRequest requestBody = new CalculationRequest();
-        requestBody.setFinancialModel(FinancialModel.MODEL_1);
+        PriceCalculationRequest requestBody = new PriceCalculationRequest();
+        requestBody.setFinancialModel(FinancialModel.PRICE_MODEL_1);
         requestBody.setPeriod(5);
         requestBody.setSaleSource(BigDecimal.valueOf(10000));
 
         BigDecimal expectedPrice = BigDecimal.valueOf(123456.78);
-        Mockito.when(financialModelService.findPurchasePriceBy(Mockito.any(CalculationRequest.class)))
+        Mockito.when(financialModelService.findProperPurchasePriceBy(Mockito.any(PriceCalculationRequest.class)))
                 .thenReturn(expectedPrice);
 
         mockMvc.perform(MockMvcRequestBuilders.post("/finance/price")
